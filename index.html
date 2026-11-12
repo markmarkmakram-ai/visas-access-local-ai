@@ -12,7 +12,7 @@ loadBtn.onclick=async()=>{loadBtn.disabled=true;setStatus('Loading Transformers.
  const {pipeline,env}=await import('https://cdn.jsdelivr.net/npm/@huggingface/transformers@3.8.1');
  env.useBrowserCache=false; // Avoid storing model files in Cache Storage
  env.allowRemoteModels=true;
- const model='onnx-community/SmolLM2-135M-Instruct';
+ const model = 'onnx-community/SmolLM2-135M-Instruct-ONNX-MHA';
  const progress_callback=p=>{if(p.status==='progress'&&p.progress!=null)setStatus('Downloading '+Math.round(p.progress)+'% — '+(p.file||'model'));else if(p.status==='initiate')setStatus('Loading '+(p.file||'model')+'…');else if(p.status==='ready')setStatus('Preparing AI…')};
  try{generator=await pipeline('text-generation',model,{device:'webgpu',dtype:'q4',progress_callback})}
  catch(gpuError){setStatus('WebGPU unavailable for this model; trying CPU/WASM…');generator=await pipeline('text-generation',model,{device:'wasm',dtype:'q4',progress_callback})}
